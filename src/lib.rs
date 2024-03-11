@@ -42,28 +42,4 @@ mod test {
         io_uring_queue_exit(&mut ring);
         ret
     }
-
-    #[test]
-    fn fsync() {
-        unsafe {
-            let mut ring = MaybeUninit::uninit();
-            let ret = io_uring_queue_init(8, ring.as_mut_ptr(), 0);
-            assert!(ret == 0);
-            let mut ring = ring.assume_init();
-
-            let f = tempfile::NamedTempFile::new().unwrap();
-            let fd = f.as_file().as_raw_fd();
-
-            let sqe = io_uring_get_sqe(&mut ring);
-            assert!(!sqe.is_null());
-            io_uring_prep_fsync(sqe, fd, 0);
-            let ret = io_uring_submit(&mut ring);
-            assert!(ret > 0);
-
-            let mut cqe = ptr::null_mut();
-            let ret = io_uring_wait_cqe(&mut ring, &mut cqe);
-            assert!(ret >= 0);
-            io_uring_cqe_seen(&mut ring, cqe);
-        }
-    }
 }

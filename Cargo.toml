@@ -1,11 +1,9 @@
 [package]
-name = "uring-sys2"
-version = "0.9.1"
+name = "liburing"
+version = "2.5.0"
 description = "liburing bindings"
-repository = "https://github.com/topecongiro/uring-sys"
 keywords = ["io_uring", "liburing"]
 license = "MIT OR Apache-2.0"
-authors = ["Without Boats <boats@mozilla.com>", "Seiichi Uchida <topecongiro@fastmail.com>"]
 edition = "2018"
 links = "uring"
 
